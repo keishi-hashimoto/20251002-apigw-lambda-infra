@@ -43,7 +43,7 @@ resource "aws_iam_role_policy_attachment" "main" {
 }
 
 resource "aws_lambda_function" "main" {
-  filename = ""
+  filename = "dummy.zip"
 
   lifecycle {
     ignore_changes = [source_code_hash, filename]
