@@ -1,0 +1,44 @@
+name: Plan
+run-name: Plan
+on:
+  pull_request:
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      id-token: write
+      pull-requests: write
+    env:
+      BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
+      BUCKET_KEY: ${{ secrets.BUCKET_KEY }}
+      TF_VAR_function_name: ${{ secrets.TF_VAR_function_name }}
+      TF_VAR_lambda_exec_role: ${{ secrets.TF_VAR_lambda_exec_role }}
+      TF_VAR_api_gateway_name: ${{ secrets.TF_VAR_api_gateway_name }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+      - name: Set up mise
+        uses: jdx/mise-action@v3
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          role-session-name: GitHubActions
+      - name: Terraform init
+        run: mise run tf-init
+      - name: Terraform plan
+        run: terraform plan -no-color | tfnotify plan
