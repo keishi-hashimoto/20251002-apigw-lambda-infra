@@ -74,5 +74,16 @@ resource "aws_lambda_permission" "main" {
   function_name = aws_lambda_function.main.function_name
   principal     = "apigateway.amazonaws.com"
   # どのステージやメソッドなども許容するために /* を付ける
-  # source_arn = "${aws_apigatewayv2_api.main.execution_arn}/*"
+  source_arn = "${aws_apigatewayv2_api.main.execution_arn}/*"
+}
+
+resource "aws_apigatewayv2_route" "name" {
+  api_id    = aws_apigatewayv2_api.main.id
+  route_key = "$default"
+  target    = aws_apigatewayv2_integration.main.id
+}
+
+resource "aws_apigatewayv2_stage" "main" {
+  name   = "default"
+  api_id = aws_apigatewayv2_api.main.id
 }
