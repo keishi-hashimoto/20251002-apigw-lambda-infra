@@ -12,3 +12,8 @@ variable "api_gateway_name" {
   type        = string
   description = "API Gateway Name"
 }
+
+variable "lambda_permission_statement_id" {
+  type        = string
+  description = "Statement ID"
+}

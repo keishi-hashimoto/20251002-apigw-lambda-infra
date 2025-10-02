@@ -67,3 +67,12 @@ resource "aws_apigatewayv2_integration" "main" {
   integration_uri        = aws_lambda_function.main.arn
   payload_format_version = "2.0"
 }
+
+resource "aws_lambda_permission" "main" {
+  statement_id  = var.lambda_permission_statement_id
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.main.function_name
+  principal     = "apigateway.amazonaws.com"
+  # どのステージやメソッドなども許容するために /* を付ける
+  source_arn = "${aws_apigatewayv2_api.main.execution_arn}/*"
+}
