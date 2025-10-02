@@ -1,0 +1,21 @@
+repos:
+  - repo: local
+    hooks:
+      - id: terraform fmt
+        name: terraform fmt
+        language: system
+        types: ["terraform"]
+        entry: terraform fmt -check
+      - id: terraform validate
+        name: terraform validate
+        language: system
+        types: ["terraform"]
+        entry: terraform validate
+        # terraform validate は引数を受け取れないので pass_filenames=false
+        pass_filenames: false
+      - id: action lint
+        name: action lint
+        language: system
+        types: ["yaml"]
+        files: \.github/workflows/
+        entry: actionlint

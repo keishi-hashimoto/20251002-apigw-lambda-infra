@@ -1,0 +1,8 @@
+[tools]
+terraform = "1.13.3"
+tfnotify = "0.8.0"
+actionlint = "1.7.7"
+pre-commit = "4.3.0"
+
+[env]
+'_'.file = ".env"
