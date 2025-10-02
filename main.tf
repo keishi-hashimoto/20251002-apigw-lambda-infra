@@ -84,6 +84,11 @@ resource "aws_apigatewayv2_route" "name" {
 }
 
 resource "aws_apigatewayv2_stage" "main" {
-  name   = "default"
+  name          = "default"
+  api_id        = aws_apigatewayv2_api.main.id
+  deployment_id = aws_apigatewayv2_deployment.main.id
+}
+
+resource "aws_apigatewayv2_deployment" "main" {
   api_id = aws_apigatewayv2_api.main.id
 }
