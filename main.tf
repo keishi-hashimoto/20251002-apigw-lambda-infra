@@ -91,4 +91,8 @@ resource "aws_apigatewayv2_stage" "main" {
 
 resource "aws_apigatewayv2_deployment" "main" {
   api_id = aws_apigatewayv2_api.main.id
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
