@@ -57,6 +57,11 @@ resource "aws_lambda_function" "main" {
 resource "aws_apigatewayv2_api" "main" {
   name          = var.api_gateway_name
   protocol_type = "HTTP"
+
+  cors_configuration {
+    allow_origins = ["*"]
+    allow_headers = ["Content-Type"]
+  }
 }
 
 
