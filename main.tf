@@ -102,4 +102,9 @@ resource "aws_apigatewayv2_deployment" "main" {
   lifecycle {
     create_before_destroy = true
   }
+
+  triggers = {
+    # CORS 設定変更時にはデプロイし直すようにする
+    redeployment = sha1(jsonencode(aws_apigatewayv2_api.main))
+  }
 }
