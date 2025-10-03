@@ -107,6 +107,6 @@ resource "aws_apigatewayv2_deployment" "main" {
 
   triggers = {
     # CORS 設定変更時にはデプロイし直すようにする
-    redeployment = sha1(jsonencode(aws_apigatewayv2_api.main))
+    redeployment = sha1(join("", [jsonencode(aws_apigatewayv2_api.main), jsonencode(aws_apigatewayv2_route.name)]))
   }
 }
