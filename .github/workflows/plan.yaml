@@ -28,6 +28,9 @@ jobs:
       TF_VAR_lambda_exec_role: ${{ secrets.TF_VAR_lambda_exec_role }}
       TF_VAR_api_gateway_name: ${{ secrets.TF_VAR_api_gateway_name }}
       TF_VAR_lambda_permission_statement_id: ${{ secrets.TF_VAR_lambda_permission_statement_id }}
+      TF_VAR_ssh_bucket_name: ${{ secrets.TF_VAR_ssh_bucket_name }}
+      TF_VAR_index_document: ${{ secrets.TF_VAR_index_document }}
+      TF_VAR_error_page: ${{ secrets.TF_VAR_error_page }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
