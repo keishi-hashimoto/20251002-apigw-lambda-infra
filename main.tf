@@ -92,10 +92,11 @@ resource "aws_apigatewayv2_route" "name" {
 }
 
 resource "aws_apigatewayv2_stage" "main" {
-  name          = "default"
-  api_id        = aws_apigatewayv2_api.main.id
-  deployment_id = aws_apigatewayv2_deployment.main.id
-  auto_deploy   = true
+  name   = "default"
+  api_id = aws_apigatewayv2_api.main.id
+  # auto_deploy が true なので depdeployment_id は指定不可
+  # deployment_id = aws_apigatewayv2_deployment.main.id
+  auto_deploy = true
 }
 
 resource "aws_apigatewayv2_deployment" "main" {
