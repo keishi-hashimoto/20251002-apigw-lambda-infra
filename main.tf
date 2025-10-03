@@ -85,8 +85,9 @@ resource "aws_lambda_permission" "main" {
 }
 
 resource "aws_apigatewayv2_route" "name" {
-  api_id    = aws_apigatewayv2_api.main.id
-  route_key = "$default"
+  api_id = aws_apigatewayv2_api.main.id
+  # $default だとフロントエンドからの OPTIONS リクエストを lambda に渡してしまうので、POST /
+  route_key = "POST /"
   target    = "integrations/${aws_apigatewayv2_integration.main.id}"
 }
 
@@ -94,6 +95,7 @@ resource "aws_apigatewayv2_stage" "main" {
   name          = "default"
   api_id        = aws_apigatewayv2_api.main.id
   deployment_id = aws_apigatewayv2_deployment.main.id
+  auto_deploy   = true
 }
 
 resource "aws_apigatewayv2_deployment" "main" {
