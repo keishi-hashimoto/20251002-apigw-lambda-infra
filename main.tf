@@ -59,8 +59,10 @@ resource "aws_apigatewayv2_api" "main" {
   protocol_type = "HTTP"
 
   cors_configuration {
-    allow_origins = ["*"]
-    allow_headers = ["Content-Type"]
+    allow_origins  = ["*"]
+    allow_headers  = ["Content-Type"]
+    allow_methods  = ["GET", "POST", "OPTIONS"]
+    expose_headers = ["Content-Type", "Access-Control-Allow-Headers"]
   }
 }
 
@@ -99,5 +101,10 @@ resource "aws_apigatewayv2_deployment" "main" {
 
   lifecycle {
     create_before_destroy = true
+  }
+
+  triggers = {
+    # CORS 設定変更時にはデプロイし直すようにする
+    redeployment = sha1(jsonencode(aws_apigatewayv2_api.main))
   }
 }
