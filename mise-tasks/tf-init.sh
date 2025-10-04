@@ -1,4 +1,5 @@
 #!/bin/bash
+#MISE dir="./src"
 
 set -Ceo pipefail
 
