@@ -43,6 +43,8 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           role-session-name: GitHubActions
       - name: Terraform init
+        # tf-init.sh の中でディレクトリ指定しているので working-directory は不要
         run: mise run tf-init
       - name: Terraform plan
         run: terraform plan -no-color | tfnotify plan
+        working-directory: ./src

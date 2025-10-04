@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  plan:
+  apply:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
@@ -45,6 +45,8 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           role-session-name: GitHubActions
       - name: Terraform init
+        # tf-init.sh の中でディレクトリ指定しているので working-directory は不要
         run: mise run tf-init
       - name: Terraform apply
         run: terraform apply -auto-approve -no-color | tfnotify apply
+        working-directory: ./src
