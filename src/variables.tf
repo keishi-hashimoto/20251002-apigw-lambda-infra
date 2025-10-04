@@ -30,3 +30,7 @@ variable "index_document" {
 variable "error_page" {
   type = string
 }
+
+variable "tablename" {
+
+}
