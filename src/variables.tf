@@ -32,5 +32,5 @@ variable "error_page" {
 }
 
 variable "tablename" {
-
+  type = string
 }
