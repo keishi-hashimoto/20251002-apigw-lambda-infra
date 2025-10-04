@@ -29,4 +29,10 @@ resource "aws_lambda_function" "main" {
   runtime       = "python3.13"
   handler       = "my_func.my_handler"
   role          = aws_iam_role.lambda_exec_role.arn
+
+  environment {
+    variables = {
+      TABLENAME = var.tablename
+    }
+  }
 }
