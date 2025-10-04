@@ -21,10 +21,6 @@ resource "aws_iam_role_policy_attachment" "main" {
 
 data "aws_iam_policy_document" "put_item_for_lambda" {
   statement {
-    principals {
-      type        = "Service"
-      identifiers = ["lambda.amazonaws.com"]
-    }
     effect    = "Allow"
     actions   = ["dynamodb:PutItem"]
     resources = [aws_dynamodb_table.main.arn]
