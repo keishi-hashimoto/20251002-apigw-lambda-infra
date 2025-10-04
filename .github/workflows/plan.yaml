@@ -46,5 +46,6 @@ jobs:
         # tf-init.sh の中でディレクトリ指定しているので working-directory は不要
         run: mise run tf-init
       - name: Terraform plan
-        run: terraform plan -no-color | tfnotify plan
+        # ディレクトリ移動しているので .tfnotify.yaml のパスを指定
+        run: terraform plan -no-color | tfnotify --config ../.tfnotify.yaml plan
         working-directory: ./src
