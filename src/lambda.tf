@@ -71,4 +71,8 @@ resource "aws_lambda_function" "main" {
       TABLENAME = var.tablename
     }
   }
+
+  tracing_config {
+    mode = "Active"
+  }
 }
