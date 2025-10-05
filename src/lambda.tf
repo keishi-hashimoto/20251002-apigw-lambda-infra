@@ -37,22 +37,10 @@ resource "aws_iam_role_policy_attachment" "dynamodb_put_item_role" {
   policy_arn = aws_iam_policy.dynamodb_put_item_role.arn
 }
 
-data "aws_iam_policy_document" "put_xray" {
-  statement {
-    effect    = "Allow"
-    resources = ["arn:aws:xray:*"]
-    actions   = ["xray:PutTraceSegments", "xray:PutTelemetryRecords"]
-  }
-}
-
-resource "aws_iam_policy" "put_xray" {
-  name   = "PutXrayRole"
-  policy = data.aws_iam_policy_document.put_xray.json
-}
 
 resource "aws_iam_role_policy_attachment" "put_xray" {
   role       = aws_iam_role.lambda_exec_role.name
-  policy_arn = aws_iam_policy.put_xray.arn
+  policy_arn = "arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess"
 }
 
 resource "aws_lambda_function" "main" {
@@ -70,5 +58,9 @@ resource "aws_lambda_function" "main" {
     variables = {
       TABLENAME = var.tablename
     }
+  }
+
+  tracing_config {
+    mode = "Active"
   }
 }
