@@ -77,6 +77,7 @@ resource "aws_lambda_function" "main" {
       TABLENAME      = var.tablename
       PRESENT_BUCKET = var.present_bucket
       PRESENT_KEY    = var.present_key
+      FROM_EMAIL     = var.from_email
     }
   }
 
