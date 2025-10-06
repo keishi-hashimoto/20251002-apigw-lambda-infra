@@ -43,6 +43,24 @@ resource "aws_iam_role_policy_attachment" "put_xray" {
   policy_arn = "arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess"
 }
 
+data "aws_iam_policy_document" "present" {
+  statement {
+    effect    = "Allow"
+    resources = [aws_s3_bucket.present.arn]
+    actions   = ["s3:GetObject"]
+  }
+}
+
+resource "aws_iam_policy" "present" {
+  name   = "GetPresentObject"
+  policy = data.aws_iam_policy_document.present.json
+}
+
+resource "aws_iam_role_policy_attachment" "present" {
+  role       = aws_iam_role.lambda_exec_role.name
+  policy_arn = aws_iam_policy.present.arn
+}
+
 resource "aws_lambda_function" "main" {
   filename = "dummy.zip"
 

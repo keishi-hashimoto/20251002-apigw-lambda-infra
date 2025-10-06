@@ -32,6 +32,8 @@ jobs:
       TF_VAR_index_document: ${{ secrets.TF_VAR_index_document }}
       TF_VAR_error_page: ${{ secrets.TF_VAR_error_page }}
       TF_VAR_tablename: ${{ secrets.TF_VAR_tablename }}
+      TF_VAR_present_bucket: ${{ secrets.TF_VAR_present_bucket }}
+      TF_VAR_present_key: ${{ secrets.TF_VAR_present_key }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
