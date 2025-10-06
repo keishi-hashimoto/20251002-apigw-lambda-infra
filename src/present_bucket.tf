@@ -4,7 +4,7 @@ resource "aws_s3_bucket" "present" {
 
 resource "aws_s3_object" "present" {
   bucket = aws_s3_bucket.present.bucket
-  key    = var.present_bucket
+  key    = var.present_key
 
   source = "./present.html"
 }
