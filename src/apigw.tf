@@ -41,6 +41,11 @@ resource "aws_apigatewayv2_stage" "main" {
   # auto_deploy が true なので depdeployment_id は指定不可
   # deployment_id = aws_apigatewayv2_deployment.main.id
   auto_deploy = true
+
+  access_log_settings {
+    destination_arn = data.aws_cloudwatch_log_group.lambda.arn
+    format          = "{ \"requestId\" : \"$context.requestId\", \"extendedRequestId\" : \"$context.extendedRequestId\", \"ip\" : \"$context.identity.sourceIp\", \"caller\" : \"$context.identity.caller\", \"user\" : \"$context.identity.user\", \"requestTime\" : \"$context.requestTime\", \"httpMethod\" : \"$context.httpMethod\", \"resourcePath\" : \"$context.resourcePath\", \"status\" : \"$context.status\", \"protocol\" : \"$context.protocol\", \"responseLength\" : \"$context.responseLength\" }"
+  }
 }
 
 resource "aws_apigatewayv2_deployment" "main" {
