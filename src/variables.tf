@@ -34,3 +34,11 @@ variable "error_page" {
 variable "tablename" {
   type = string
 }
+
+variable "present_bucket" {
+  type = string
+}
+
+variable "present_key" {
+  type = string
+}
