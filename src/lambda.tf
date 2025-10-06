@@ -46,7 +46,7 @@ resource "aws_iam_role_policy_attachment" "put_xray" {
 data "aws_iam_policy_document" "present" {
   statement {
     effect    = "Allow"
-    resources = [aws_s3_bucket.present.arn]
+    resources = [aws_s3_object.present.arn]
     actions   = ["s3:GetObject"]
   }
 }
