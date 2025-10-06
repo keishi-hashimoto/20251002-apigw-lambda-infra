@@ -42,3 +42,7 @@ variable "present_bucket" {
 variable "present_key" {
   type = string
 }
+
+variable "from_email" {
+  type = string
+}

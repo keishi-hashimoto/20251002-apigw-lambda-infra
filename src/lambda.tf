@@ -61,6 +61,24 @@ resource "aws_iam_role_policy_attachment" "present" {
   policy_arn = aws_iam_policy.present.arn
 }
 
+data "aws_iam_policy_document" "send_email" {
+  statement {
+    effect    = "Allow"
+    actions   = ["ses:SendEmail"]
+    resources = ["*"]
+  }
+}
+
+resource "aws_iam_policy" "send_email" {
+  name   = "SendEmailRolePolicy"
+  policy = data.aws_iam_policy_document.send_email.json
+}
+
+resource "aws_iam_role_policy_attachment" "send_email" {
+  role       = aws_iam_role.lambda_exec_role.name
+  policy_arn = aws_iam_policy.send_email.arn
+}
+
 resource "aws_lambda_function" "main" {
   filename = "dummy.zip"
 
@@ -77,6 +95,7 @@ resource "aws_lambda_function" "main" {
       TABLENAME      = var.tablename
       PRESENT_BUCKET = var.present_bucket
       PRESENT_KEY    = var.present_key
+      FROM_EMAIL     = var.from_email
     }
   }
 
