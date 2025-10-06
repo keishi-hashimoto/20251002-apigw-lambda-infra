@@ -74,7 +74,9 @@ resource "aws_lambda_function" "main" {
 
   environment {
     variables = {
-      TABLENAME = var.tablename
+      TABLENAME      = var.tablename
+      PRESENT_BUCKET = var.present_bucket
+      PRESENT_KEY    = var.present_key
     }
   }
 
